@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
+  controllers: [AppController],
+  providers: [AppService],
   imports: [
     AuthModule,
     ConfigModule.forRoot(),
@@ -18,8 +20,9 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.DB_PASSWORD,
       autoLoadEntities: true,
       synchronize: true,
-    }),],
-  controllers: [AppController],
-  providers: [AppService],
+    }),
+   
+  
+  ],
 })
 export class AppModule {}

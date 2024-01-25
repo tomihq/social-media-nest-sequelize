@@ -5,6 +5,8 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
 import { LoginUserDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './interfaces';
 @Injectable()
 export class AuthService {
   
@@ -12,7 +14,8 @@ export class AuthService {
 
   constructor(
     @InjectRepository(User)
-    private readonly userRepository:Repository<User>
+    private readonly userRepository:Repository<User>,
+    private readonly jwtService: JwtService
   ){}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -32,11 +35,20 @@ export class AuthService {
   async login(loginUserDto: LoginUserDto){
     //Autentico haciendo findOne por email en DB. Luego obtengo esa password y veo si la password enviada hasheada es la misma que la base.
       const { email, password } = loginUserDto
-      const user = await this.userRepository.findOne({where: {email}, select: {email: true, password: true}});
+      const user = await this.userRepository.findOne({where: {email}, select: {id: true, email: true, password: true}});
       const { password: dbPassword } = user; 
       if(!bcrypt.compareSync(password, dbPassword)) throw new UnauthorizedException();
-      
-      return true; 
+      delete user.password;
+
+      return {
+        ...user,
+        token: this.getJwtToken({id: user.id})
+      }; 
+  }
+
+  private getJwtToken(payload: JwtPayload): string {
+    const token = this.jwtService.sign(payload);
+    return token;
   }
 
   handleExceptions(error: any){
