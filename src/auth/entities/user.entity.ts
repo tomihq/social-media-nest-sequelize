@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity('user')
 export class User {
     @PrimaryGeneratedColumn('uuid')
     id: string;
