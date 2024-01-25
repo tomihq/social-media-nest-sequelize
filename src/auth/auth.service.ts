@@ -43,8 +43,11 @@ export class AuthService {
 
   async renewToken(user: User) {
     return {
-      token: this.getJwtToken({ id: user.id }),
-      user,
+      
+      user: {
+        email: user.email,
+        token: this.getJwtToken({ id: user.id }),
+      },
     };
   }
 
