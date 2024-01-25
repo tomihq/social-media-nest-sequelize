@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-auth.dto';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, UnauthorizedException } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt'
+import { LoginUserDto } from './dto';
 @Injectable()
 export class AuthService {
   
@@ -26,6 +27,16 @@ export class AuthService {
     } catch (error) {
       this.handleExceptions(error)
     }
+  }
+
+  async login(loginUserDto: LoginUserDto){
+    //Autentico haciendo findOne por email en DB. Luego obtengo esa password y veo si la password enviada hasheada es la misma que la base.
+      const { email, password } = loginUserDto
+      const user = await this.userRepository.findOne({where: {email}, select: {email: true, password: true}});
+      const { password: dbPassword } = user; 
+      if(!bcrypt.compareSync(password, dbPassword)) throw new UnauthorizedException();
+      
+      return true; 
   }
 
   handleExceptions(error: any){
