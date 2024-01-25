@@ -6,12 +6,12 @@ services:
     restart: always
     environment:
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: nestStarter
-    container_name: NestStarter
+      POSTGRES_DB: socialMediaNest
+    container_name: SocialMedia
     env_file:
       - .env
     ports:
-      - "4301:5432"
+      - "4302:5432"
     volumes:
        - ./postgres:/var/lib/postgresql/data
     

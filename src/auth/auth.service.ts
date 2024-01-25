@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -40,12 +41,21 @@ export class AuthService {
     }
   }
 
+  async renewToken(user: User) {
+    return {
+      token: this.getJwtToken({ id: user.id }),
+      user,
+    };
+  }
+
   async loginUser(loginUserDto: LoginUserDto) {
     const { email, password } = loginUserDto;
     const user = await this.userRepository.findOne({
       where: { email },
       select: { id: true, email: true, password: true },
     });
+
+    if (!user) throw new NotFoundException(`Invalid User`);
     const { password: dbPassword } = user;
     if (!bcrypt.compareSync(password, dbPassword))
       throw new UnauthorizedException();
