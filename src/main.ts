@@ -17,6 +17,8 @@ async function bootstrap() {
 
   app.use(helmet())
 
+
   await app.listen(3000);
+  logger.log(`App running on PORT ${process.env.PORT}`)
 }
 bootstrap();
