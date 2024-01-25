@@ -35,7 +35,7 @@ export class AuthService {
     }
   }
 
-  async login(loginUserDto: LoginUserDto){
+  async loginUser(loginUserDto: LoginUserDto){
       const { email, password } = loginUserDto
       const user = await this.userRepository.findOne({where: {email}, select: {id: true, email: true, password: true}});
       const { password: dbPassword } = user; 
