@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-
+import * as bcrypt from 'bcrypt'
 @Injectable()
 export class AuthService {
   
@@ -16,9 +16,13 @@ export class AuthService {
 
   async createUser(createUserDto: CreateUserDto) {
     try {
-      const user = this.userRepository.create(createUserDto)
+      const { password, ...userData} = createUserDto
+      const user = this.userRepository.create({
+        ...userData,
+        password: bcrypt.hashSync(password, 10)
+      })
       await this.userRepository.save(user);
-      return 'This action adds a new auth';
+      return userData;
     } catch (error) {
       this.handleExceptions(error)
     }
@@ -26,6 +30,7 @@ export class AuthService {
 
   handleExceptions(error: any){
     if(error.code === '23505') throw new BadRequestException(`${error.detail}`)
+    console.log(error)
 
     throw new InternalServerErrorException(`Oops, something went wrong. Check server logs`)
   }
