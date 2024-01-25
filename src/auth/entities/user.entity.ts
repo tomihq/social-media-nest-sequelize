@@ -1,42 +1,47 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('user')
 export class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column('text')
-    fullName: string;
+  @Column('text')
+  fullName: string;
 
-    @Column('text', {
-        unique: true
-    })
-    email: string;
+  @Column('text', {
+    unique: true,
+  })
+  email: string;
 
-    @Column('text', {
-        select: false 
-    })
-    password: string;
-    
-    @Column('bool', {
-        default: true 
-    })
-    isActive: boolean;
+  @Column('text', {
+    select: false,
+  })
+  password: string;
 
-    @Column('text', {
-        array: true,
-        default: ['user'],
-      })
-    roles: string[];
+  @Column('bool', {
+    default: true,
+  })
+  isActive: boolean;
 
-    @BeforeInsert()
-    checkFieldsBeforeInsert() {
-      this.email = this.email.toLowerCase().trim();
-    }
-  
-    @BeforeUpdate()
-    checkFieldsBeforeUpdate() {
-      this.checkFieldsBeforeInsert();
-    }
+  @Column('text', {
+    array: true,
+    default: ['user'],
+  })
+  roles: string[];
 
+  @BeforeInsert()
+  checkFieldsBeforeInsert() {
+    this.email = this.email.toLowerCase().trim();
+  }
+
+  @BeforeUpdate()
+  checkFieldsBeforeUpdate() {
+    this.checkFieldsBeforeInsert();
+  }
 }

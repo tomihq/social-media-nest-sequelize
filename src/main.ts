@@ -5,8 +5,8 @@ import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const logger = new Logger('main')
-  app.setGlobalPrefix('api/v1')
+  const logger = new Logger('main');
+  app.setGlobalPrefix('api/v1');
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -15,10 +15,9 @@ async function bootstrap() {
     }),
   );
 
-  app.use(helmet())
-
+  app.use(helmet());
 
   await app.listen(3000);
-  logger.log(`App running on PORT ${process.env.PORT}`)
+  logger.log(`App running on PORT ${process.env.PORT}`);
 }
 bootstrap();
