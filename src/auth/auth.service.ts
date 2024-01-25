@@ -26,14 +26,16 @@ export class AuthService {
         password: bcrypt.hashSync(password, 10)
       })
       await this.userRepository.save(user);
-      return userData;
+      return {
+        ...userData,
+        token: this.getJwtToken({id: user.id})
+      };
     } catch (error) {
       this.handleExceptions(error)
     }
   }
 
   async login(loginUserDto: LoginUserDto){
-    //Autentico haciendo findOne por email en DB. Luego obtengo esa password y veo si la password enviada hasheada es la misma que la base.
       const { email, password } = loginUserDto
       const user = await this.userRepository.findOne({where: {email}, select: {id: true, email: true, password: true}});
       const { password: dbPassword } = user; 
