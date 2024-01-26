@@ -2,8 +2,8 @@ import {  Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Post } from "./post.entity";
 import { User } from "src/auth/entities/user.entity";
 
-@Entity('retweets')
-export class Retweet {
+@Entity('posts_retweets')
+export class PostRetweet {
     @PrimaryGeneratedColumn('uuid')
     id: string;
     

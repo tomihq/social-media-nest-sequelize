@@ -1,5 +1,5 @@
 import { Post } from 'src/posts/entities/post.entity';
-import { Retweet } from 'src/posts/entities/retweet.entity';
+import { PostRetweet } from 'src/posts/entities/retweet.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -51,8 +51,8 @@ export class User {
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[]
 
-  @OneToMany(() => Retweet, (retweet) => retweet.userId)
-  retweets: Retweet[]
+  @OneToMany(() => PostRetweet, (postRetweet) => postRetweet.userId)
+  retweets: PostRetweet[]
 
 
 
