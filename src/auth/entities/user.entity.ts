@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { Post } from 'src/posts/entities/post.entity';
 import {
   BeforeInsert,
@@ -35,6 +36,11 @@ export class User {
     default: true,
   })
   isActive: boolean;
+
+  @Column('text', {
+    default: ""
+  })
+  avatarUrl: string;
 
   @Column('text', {
     array: true,

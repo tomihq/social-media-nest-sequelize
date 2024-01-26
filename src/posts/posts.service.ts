@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/auth/entities/user.entity';
@@ -35,9 +35,8 @@ export class PostsService {
   }
 
   async findOne(id: string) {
-    const post = await this.postService.findOne({where: {id}, select: {id: true, body: true, user: {
-      fullName: true
-    }}})
+    const post = await this.postService.findOne({select: {id: true, body: true, attachments: true, created_at: true, updated_at: true}, where: { id } })
+    if(!post) throw new NotFoundException(`Invalid Post`)
     return post;
   }
 
