@@ -17,6 +17,11 @@ export class User {
   fullName: string;
 
   @Column('text', {
+    unique: true
+  })
+  username: string;
+
+  @Column('text', {
     unique: true,
   })
   email: string;
@@ -43,6 +48,11 @@ export class User {
   @BeforeInsert()
   checkFieldsBeforeInsert() {
     this.email = this.email.toLowerCase().trim();
+    if(!this.username){
+      this.username = this.fullName.toLowerCase()
+      .replaceAll(' ', '_')
+      .replaceAll("'", '');
+    }
   }
 
   @BeforeUpdate()

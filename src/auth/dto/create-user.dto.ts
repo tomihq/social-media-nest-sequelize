@@ -1,5 +1,7 @@
 import {
   IsEmail,
+  IsLowercase,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -7,9 +9,16 @@ import {
 } from 'class-validator';
 
 export class CreateUserDto {
+
   @IsString()
   @MinLength(1)
   fullName: string;
+
+  @IsString()
+  @IsLowercase()
+  @MinLength(1)
+  @MaxLength(12)
+  username: string;
 
   @IsString()
   @IsEmail()

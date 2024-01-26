@@ -14,6 +14,12 @@ export class Post {
     })
     user: User;
 
+    @Column('text', {
+        array: true,
+        default: [],
+    })
+    attachments: string[];
+
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     public created_at: Date;
 

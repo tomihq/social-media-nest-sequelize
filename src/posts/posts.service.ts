@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/auth/entities/user.entity';
@@ -25,7 +25,7 @@ export class PostsService {
       const postInstance = this.postService.create(post);
       await this.postService.save(postInstance)
     } catch (error) {
-      
+      this.handleExceptions(error)
     }
     return true; 
   }
@@ -34,8 +34,11 @@ export class PostsService {
     return `This action returns all posts`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: string) {
+    const post = await this.postService.findOne({where: {id}, select: {id: true, body: true, user: {
+      fullName: true
+    }}})
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
@@ -45,4 +48,12 @@ export class PostsService {
   remove(id: number) {
     return `This action removes a #${id} post`;
   }
+
+  private handleExceptions(error: any) {
+    this.logger.error(error);
+    throw new InternalServerErrorException(
+      'Unexpected Error. Check server logs',
+    );
+  }
+
 }
