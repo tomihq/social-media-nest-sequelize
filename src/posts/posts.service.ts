@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/auth/entities/user.entity';
@@ -8,6 +8,8 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PostsService {
+
+  logger = new Logger('posts');
   
   constructor(
     @InjectRepository(Post)
