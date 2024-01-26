@@ -1,8 +1,10 @@
+import { Post } from 'src/posts/entities/post.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -34,6 +36,9 @@ export class User {
     default: ['user'],
   })
   roles: string[];
+
+  @OneToMany(() => Post, (post) => post.user)
+  posts: Post[]
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {
