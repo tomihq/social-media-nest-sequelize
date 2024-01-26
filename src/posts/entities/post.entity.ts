@@ -1,5 +1,6 @@
 import { User } from "src/auth/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Retweet } from "./retweet.entity";
 
 @Entity('posts')
 export class Post {
@@ -14,11 +15,34 @@ export class Post {
     })
     user: User;
 
+    
+
     @Column('text', {
         array: true,
         default: [],
     })
     attachments: string[];
+
+    @Column('int', {
+        default: 0
+    })
+    likes: number;
+
+    @OneToMany(() => Retweet, (retween) => retween.postId, {
+        eager: true,
+    })
+    retweets: Retweet[];
+
+    @Column('int', {
+        default: 0
+    })
+    saves: number;
+
+    @Column('text', {
+        array: true,
+        default: []
+    })
+
 
     @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
     public created_at: Date;
