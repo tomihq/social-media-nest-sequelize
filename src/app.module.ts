@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
+import { IsrModule } from './isr/isr.module';
 
 @Module({
-  controllers: [AppController],
-  providers: [AppService],
   imports: [
     AuthModule,
     ConfigModule.forRoot(),
@@ -25,6 +22,7 @@ import { PostsModule } from './posts/posts.module';
     }),
     UsersModule,
     PostsModule,
+    IsrModule,
   ],
 })
 export class AppModule {}
