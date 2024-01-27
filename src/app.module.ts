@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
-import { IsrModule } from './isr/isr.module';
+import { RevalidateTagModule } from './revalidateTag/revalidate-tag.module';
+import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { IsrModule } from './isr/isr.module';
     }),
     UsersModule,
     PostsModule,
-    IsrModule,
+    RevalidateTagModule,
+    RevalidatePathModule,
   ],
 })
 export class AppModule {}
