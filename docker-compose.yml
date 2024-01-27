@@ -15,4 +15,18 @@ services:
     volumes:
        - ./postgres:/var/lib/postgresql/data
     
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: nest-docker-postgres
+    env_file:
+      - .env
+    ports:
+      - '3001:3000'
+    depends_on:
+      - teslo-shop
+    volumes:
+      - ./src:/app/src
+    
     
