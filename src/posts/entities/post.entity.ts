@@ -1,54 +1,63 @@
-import { User } from "src/auth/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { PostRetweet } from "./retweet.entity";
+import { User } from 'src/auth/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { PostRetweet } from './retweet.entity';
 
 @Entity('posts')
 export class Post {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-    
-    @Column('text')
-    body: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @ManyToOne(() => User, (user) => user.posts, {
-        eager: true,
-    })
-    user: User;
+  @Column('text')
+  body: string;
 
-    
-    @Column('text', {
-        array: true,
-        default: [],
-    })
-    attachments: string[];
+  @ManyToOne(() => User, (user) => user.posts, {
+    eager: true,
+  })
+  user: User;
 
-    @Column('int', {
-        default: 0
-    })
-    likes: number;
+  @Column('text', {
+    array: true,
+    default: [],
+  })
+  attachments: string[];
 
-    @OneToMany(() => PostRetweet, (retween) => retween.postId, {
-        eager: true,
-    })
-    retweets: PostRetweet[];
+  @Column('int', {
+    default: 0,
+  })
+  likes: number;
 
-    @Column('int', {
-        default: 0
-    })
-    saves: number;
+  @OneToMany(() => PostRetweet, (retween) => retween.postId, {
+    eager: true,
+  })
+  retweets: PostRetweet[];
 
-    @Column('text', {
-        array: true,
-        default: []
-    })
+  @Column('int', {
+    default: 0,
+  })
+  saves: number;
 
+  @Column('text', {
+    array: true,
+    default: [],
+  })
+  @CreateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+  })
+  public created_at: Date;
 
-    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
-    public created_at: Date;
-
-    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
-    public updated_at: Date;
-
-
-
+  @UpdateDateColumn({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP(6)',
+    onUpdate: 'CURRENT_TIMESTAMP(6)',
+  })
+  public updated_at: Date;
 }

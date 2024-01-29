@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/auth/entities/user.entity';
@@ -8,26 +14,25 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class PostsService {
-
   logger = new Logger('posts');
-  
+
   constructor(
     @InjectRepository(Post)
-    private readonly postService:Repository<Post>
-  ){}
-  
+    private readonly postService: Repository<Post>,
+  ) {}
+
   async create(user: User, createPostDto: CreatePostDto) {
     try {
       const post = {
         user,
-        ...createPostDto
-      }
+        ...createPostDto,
+      };
       const postInstance = this.postService.create(post);
-      await this.postService.save(postInstance)
+      await this.postService.save(postInstance);
     } catch (error) {
-      this.handleExceptions(error)
+      this.handleExceptions(error);
     }
-    return true; 
+    return true;
   }
 
   findAll() {
@@ -35,8 +40,17 @@ export class PostsService {
   }
 
   async findOne(id: string) {
-    const post = await this.postService.findOne({select: {id: true, body: true, attachments: true, created_at: true, updated_at: true}, where: { id } })
-    if(!post) throw new NotFoundException(`Invalid Post`)
+    const post = await this.postService.findOne({
+      select: {
+        id: true,
+        body: true,
+        attachments: true,
+        created_at: true,
+        updated_at: true,
+      },
+      where: { id },
+    });
+    if (!post) throw new NotFoundException(`Invalid Post`);
     return post;
   }
 
@@ -54,5 +68,4 @@ export class PostsService {
       'Unexpected Error. Check server logs',
     );
   }
-
 }

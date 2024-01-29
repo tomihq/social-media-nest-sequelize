@@ -18,7 +18,7 @@ export class User {
   fullName: string;
 
   @Column('text', {
-    unique: true
+    unique: true,
   })
   username: string;
 
@@ -38,7 +38,7 @@ export class User {
   isActive: boolean;
 
   @Column('text', {
-    default: ""
+    default: '',
   })
   avatarUrl: string;
 
@@ -49,20 +49,19 @@ export class User {
   roles: string[];
 
   @OneToMany(() => Post, (post) => post.user)
-  posts: Post[]
+  posts: Post[];
 
   @OneToMany(() => PostRetweet, (postRetweet) => postRetweet.userId)
-  retweets: PostRetweet[]
-
-
+  retweets: PostRetweet[];
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {
     this.email = this.email.toLowerCase().trim();
-    if(!this.username){
-      this.username = this.fullName.toLowerCase()
-      .replaceAll(' ', '_')
-      .replaceAll("'", '');
+    if (!this.username) {
+      this.username = this.fullName
+        .toLowerCase()
+        .replaceAll(' ', '_')
+        .replaceAll("'", '');
     }
   }
 

@@ -16,6 +16,7 @@ async function bootstrap() {
   );
 
   app.use(helmet());
+  app.enableCors();
 
   await app.listen(process.env.PORT);
   logger.log(`App running on PORT ${process.env.PORT}`);

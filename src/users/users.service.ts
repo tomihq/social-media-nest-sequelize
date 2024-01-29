@@ -12,9 +12,8 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-
   logger = new Logger('users');
-  
+
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
