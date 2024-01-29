@@ -15,6 +15,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsLowercase()
+  @IsOptional()
   @MinLength(1)
   @MaxLength(12)
   username: string;
