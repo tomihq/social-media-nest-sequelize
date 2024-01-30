@@ -5,7 +5,7 @@ import { Injectable } from '@nestjs/common';
 export class MailService {
   constructor(private readonly mailerService: MailerService) {}
 
-  sendMail(): void {
+  async sendMail(): Promise<void> {
     this.mailerService.sendMail({
       to: 'hernandeztomas584@gmail.com',
       from: process.env.NODEMAILER_USER,
