@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { PostRetweet } from './retweet.entity';
+import { PostAnswers } from './post_answers.entity';
 
 @Entity('posts')
 export class Post {
@@ -38,6 +39,11 @@ export class Post {
     eager: true,
   })
   retweets: PostRetweet[];
+
+  @OneToMany(() => PostAnswers, (postsAnswers) => postsAnswers.post, {
+    eager: true,
+  })
+  postsAnswers: PostAnswers[];
 
   @Column('int', {
     default: 0,
