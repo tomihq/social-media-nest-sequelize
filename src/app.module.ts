@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { RevalidateTagModule } from './revalidateTag/revalidate-tag.module';
 import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
     PostsModule,
     RevalidateTagModule,
     RevalidatePathModule,
+    MailModule,
   ],
 })
 export class AppModule {}
