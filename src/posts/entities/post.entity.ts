@@ -40,9 +40,7 @@ export class Post {
   })
   retweets: PostRetweet[];
 
-  @OneToMany(() => PostAnswers, (postsAnswers) => postsAnswers.post, {
-    eager: true,
-  })
+  @OneToMany(() => PostAnswers, (postsAnswers) => postsAnswers.post)
   postsAnswers: PostAnswers[];
 
   @Column('int', {

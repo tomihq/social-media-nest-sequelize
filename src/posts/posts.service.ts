@@ -42,12 +42,10 @@ export class PostsService {
 
   async findOne(id: string) {
     const post = await this.postService.findOne({
-      select: {
-        id: true,
-        body: true,
-        attachments: true,
-        created_at: true,
-        updated_at: true,
+      relations: {
+        postsAnswers: {
+          post: true,
+        },
       },
       where: { id },
     });
