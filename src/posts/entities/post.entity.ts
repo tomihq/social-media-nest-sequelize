@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { PostRetweet } from './retweet.entity';
-import { PostAnswers } from './post_answers.entity';
+import { PostAnswers } from '../postsAnswers/entities/post-answers.entity';
 
 @Entity('posts')
 export class Post {

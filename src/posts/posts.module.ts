@@ -5,11 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { AuthModule } from 'src/auth/auth.module';
 import { PostRetweet } from './entities/retweet.entity';
-import { PostAnswers } from './entities/post_answers.entity';
 
 @Module({
   controllers: [PostsController],
-  imports: [TypeOrmModule.forFeature([Post, PostRetweet, PostAnswers]), AuthModule],
+  imports: [TypeOrmModule.forFeature([Post, PostRetweet]), AuthModule],
   providers: [PostsService],
+  exports: [PostsService],
 })
 export class PostsModule {}

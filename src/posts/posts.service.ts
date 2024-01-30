@@ -29,10 +29,11 @@ export class PostsService {
       };
       const postInstance = this.postService.create(post);
       await this.postService.save(postInstance);
+
+      return postInstance;
     } catch (error) {
       this.handleExceptions(error);
     }
-    return true;
   }
 
   findAll() {

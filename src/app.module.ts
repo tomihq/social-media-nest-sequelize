@@ -7,6 +7,7 @@ import { PostsModule } from './posts/posts.module';
 import { RevalidateTagModule } from './revalidateTag/revalidate-tag.module';
 import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
 import { MailModule } from './mail/mail.module';
+import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { MailModule } from './mail/mail.module';
     }),
     UsersModule,
     PostsModule,
+    AnswersModule,
     RevalidateTagModule,
     RevalidatePathModule,
     MailModule,
