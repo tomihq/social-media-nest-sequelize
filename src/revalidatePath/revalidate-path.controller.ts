@@ -4,9 +4,9 @@ import { RevalidatePathService } from './revalidate-path.service';
 @Controller('revalidatePath')
 export class RevalidatePathController {
   constructor(private readonly revalidatePathService: RevalidatePathService) {}
-  
+
   @Get('/random')
-  getRandom(){
+  getRandom() {
     return this.revalidatePathService.getRandom();
   }
 

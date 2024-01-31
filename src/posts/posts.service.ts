@@ -1,42 +1,73 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { User } from 'src/auth/entities/user.entity';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { getFormattedPagination } from 'src/common/helpers/get-formatted-pagination.helpers';
 
 @Injectable()
 export class PostsService {
-
   logger = new Logger('posts');
-  
+
   constructor(
     @InjectRepository(Post)
-    private readonly postService:Repository<Post>
-  ){}
-  
+    private readonly postRepository: Repository<Post>,
+  ) {}
+
   async create(user: User, createPostDto: CreatePostDto) {
     try {
       const post = {
         user,
-        ...createPostDto
-      }
-      const postInstance = this.postService.create(post);
-      await this.postService.save(postInstance)
+        ...createPostDto,
+      };
+      const postInstance = this.postRepository.create(post);
+      await this.postRepository.save(postInstance);
+
+      return {
+        post: postInstance,
+      };
     } catch (error) {
-      this.handleExceptions(error)
+      this.handleExceptions(error);
     }
-    return true; 
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(paginationDto: PaginationDto) {
+    const { skip, take } = getFormattedPagination(paginationDto);
+    const queryBuilder = this.postRepository.createQueryBuilder('posts');
+    const posts = await queryBuilder
+      .addOrderBy('posts.created_at', 'DESC')
+      .leftJoin('posts.user', 'user')
+      .loadRelationCountAndMap('posts.answers', 'posts.postsAnswers')
+      .addSelect(['user.username', 'user.fullName'])
+      .offset(skip)
+      .limit(take)
+      .getMany(); /*getSql() te trae la consulta armada */
+
+    return {
+      posts,
+      hasNextPage: posts.length >= take,
+    };
   }
 
   async findOne(id: string) {
-    const post = await this.postService.findOne({select: {id: true, body: true, attachments: true, created_at: true, updated_at: true}, where: { id } })
-    if(!post) throw new NotFoundException(`Invalid Post`)
+    const post = await this.postRepository.findOne({
+      relations: {
+        postsAnswers: {
+          post: true,
+        },
+      },
+      where: { id },
+    });
+    if (!post) throw new NotFoundException(`Invalid Post`);
     return post;
   }
 
@@ -54,5 +85,4 @@ export class PostsService {
       'Unexpected Error. Check server logs',
     );
   }
-
 }

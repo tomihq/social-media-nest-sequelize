@@ -10,5 +10,6 @@ import { PostRetweet } from './entities/retweet.entity';
   controllers: [PostsController],
   imports: [TypeOrmModule.forFeature([Post, PostRetweet]), AuthModule],
   providers: [PostsService],
+  exports: [PostsService],
 })
 export class PostsModule {}

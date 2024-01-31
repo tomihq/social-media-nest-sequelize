@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from './dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces';
+import { MailService } from 'src/mail/mail.service';
 @Injectable()
 export class AuthService {
   logger = new Logger('auth');
@@ -22,6 +23,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {}
 
   async createUser(createUserDto: CreateUserDto) {
@@ -32,6 +34,9 @@ export class AuthService {
         password: bcrypt.hashSync(password, 10),
       });
       await this.userRepository.save(user);
+
+      await this.mailService.sendMail();
+
       return {
         ...userData,
         token: this.getJwtToken({ id: user.id }),
@@ -43,7 +48,6 @@ export class AuthService {
 
   async renewToken(user: User) {
     return {
-      
       user: {
         email: user.email,
         token: this.getJwtToken({ id: user.id }),

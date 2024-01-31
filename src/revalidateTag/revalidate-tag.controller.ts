@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body} from '@nestjs/common';
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { CreateRevalidateTagDto } from './dto/create-revalidate-tag.dto';
 import { RevalidateTagService } from './revalidate-tag.service';
 
@@ -15,7 +15,4 @@ export class RevalidateTagController {
   findLast() {
     return this.revalidateTagService.findLast();
   }
-
-  
-
 }
