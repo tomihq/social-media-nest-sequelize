@@ -32,7 +32,9 @@ export class PostsService {
       const postInstance = this.postRepository.create(post);
       await this.postRepository.save(postInstance);
 
-      return postInstance;
+      return {
+        post: postInstance,
+      };
     } catch (error) {
       this.handleExceptions(error);
     }
@@ -42,7 +44,6 @@ export class PostsService {
     const { skip, take } = getFormattedPagination(paginationDto);
     const queryBuilder = this.postRepository.createQueryBuilder('posts');
     const posts = await queryBuilder
-      .orderBy('posts.id', 'DESC')
       .addOrderBy('posts.created_at', 'DESC')
       .leftJoin('posts.user', 'user')
       .loadRelationCountAndMap('posts.answers', 'posts.postsAnswers')
@@ -53,6 +54,7 @@ export class PostsService {
 
     return {
       posts,
+      hasNextPage: posts.length >= take,
     };
   }
 

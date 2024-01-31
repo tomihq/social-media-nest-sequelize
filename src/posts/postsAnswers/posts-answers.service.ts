@@ -26,7 +26,7 @@ export class PostsAnswersService {
       const postAnswerData = {
         user,
         post: {
-          ...createdPost,
+          ...createdPost.post,
         },
       };
       const postAnswer = this.postAnswersRepository.create(postAnswerData);
