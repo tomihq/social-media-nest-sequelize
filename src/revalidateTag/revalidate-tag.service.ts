@@ -14,13 +14,13 @@ export class RevalidateTagService {
 
   constructor(
     @InjectRepository(Isr)
-    private readonly isr: Repository<Isr>,
+    private readonly isrRepository: Repository<Isr>,
   ) {}
 
   async create(createRevalidateTagDto: CreateRevalidateTagDto) {
     try {
-      const isrUser = this.isr.create(createRevalidateTagDto);
-      await this.isr.save(isrUser);
+      const isrUser = this.isrRepository.create(createRevalidateTagDto);
+      await this.isrRepository.save(isrUser);
       await this.revalidate();
       return isrUser;
     } catch (error) {
@@ -29,7 +29,7 @@ export class RevalidateTagService {
   }
 
   async findLast(): Promise<{ ok: boolean; user: Isr | null }> {
-    const [user = null] = await this.isr.find({
+    const [user = null] = await this.isrRepository.find({
       order: {
         id: -1,
       },

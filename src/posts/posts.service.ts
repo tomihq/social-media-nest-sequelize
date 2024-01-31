@@ -11,6 +11,8 @@ import { User } from 'src/auth/entities/user.entity';
 import { Post } from './entities/post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { getFormattedPagination } from 'src/common/helpers/get-formatted-pagination.helpers';
 
 @Injectable()
 export class PostsService {
@@ -18,7 +20,7 @@ export class PostsService {
 
   constructor(
     @InjectRepository(Post)
-    private readonly postService: Repository<Post>,
+    private readonly postRepository: Repository<Post>,
   ) {}
 
   async create(user: User, createPostDto: CreatePostDto) {
@@ -27,8 +29,8 @@ export class PostsService {
         user,
         ...createPostDto,
       };
-      const postInstance = this.postService.create(post);
-      await this.postService.save(postInstance);
+      const postInstance = this.postRepository.create(post);
+      await this.postRepository.save(postInstance);
 
       return postInstance;
     } catch (error) {
@@ -36,12 +38,19 @@ export class PostsService {
     }
   }
 
-  findAll() {
-    return `This action returns all posts`;
+  async findAll(paginationDto: PaginationDto) {
+    const {skip, take} = getFormattedPagination(paginationDto);
+    const queryBuilder =  this.postRepository.createQueryBuilder('paginatedPosts')
+    const posts = await queryBuilder
+                .innerJoin('users', 'u')
+
+    return {
+      posts
+    };
   }
 
   async findOne(id: string) {
-    const post = await this.postService.findOne({
+    const post = await this.postRepository.findOne({
       relations: {
         postsAnswers: {
           post: true,

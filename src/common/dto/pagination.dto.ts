@@ -10,7 +10,7 @@ export class PaginationDto {
 
   @IsOptional()
   @IsInt()
-  @Min(0)
+  @Min(1)
   @Type(() => Number) //Esto es lo que haría si ponemos en el main.ts el enableImplicitConversions: true
   page?: number;
 }

@@ -14,7 +14,7 @@ import { PostAnswers } from './entities/post-answers.entity';
 export class PostsAnswersService {
   constructor(
     @InjectRepository(PostAnswers)
-    private readonly postAnswers: Repository<PostAnswers>,
+    private readonly postAnswersRepository: Repository<PostAnswers>,
     private readonly postService: PostsService,
   ) {}
 
@@ -29,8 +29,8 @@ export class PostsAnswersService {
           ...createdPost,
         },
       };
-      const postAnswer = this.postAnswers.create(postAnswerData);
-      const createdPostAnswer = await this.postAnswers.save(postAnswer);
+      const postAnswer = this.postAnswersRepository.create(postAnswerData);
+      const createdPostAnswer = await this.postAnswersRepository.save(postAnswer);
       return {
         post: createdPostAnswer.post,
       };
