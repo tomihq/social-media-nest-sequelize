@@ -9,11 +9,12 @@ import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
 import { MailModule } from './mail/mail.module';
 import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
 import { FilesModule } from './files/files.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
     AuthModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -31,6 +32,7 @@ import { FilesModule } from './files/files.module';
     RevalidatePathModule,
     MailModule,
     FilesModule,
+    CloudinaryModule,
   ],
 })
 export class AppModule {}
