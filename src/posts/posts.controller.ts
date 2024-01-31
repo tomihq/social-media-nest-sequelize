@@ -28,7 +28,7 @@ export class PostsController {
   }
 
   @Get()
-  findAll(@Query() paginationDto:PaginationDto) {
+  findAll(@Query() paginationDto: PaginationDto) {
     return this.postsService.findAll(paginationDto);
   }
 

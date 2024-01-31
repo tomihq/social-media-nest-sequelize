@@ -30,7 +30,8 @@ export class PostsAnswersService {
         },
       };
       const postAnswer = this.postAnswersRepository.create(postAnswerData);
-      const createdPostAnswer = await this.postAnswersRepository.save(postAnswer);
+      const createdPostAnswer =
+        await this.postAnswersRepository.save(postAnswer);
       return {
         post: createdPostAnswer.post,
       };

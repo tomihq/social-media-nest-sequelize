@@ -39,13 +39,20 @@ export class PostsService {
   }
 
   async findAll(paginationDto: PaginationDto) {
-    const {skip, take} = getFormattedPagination(paginationDto);
-    const queryBuilder =  this.postRepository.createQueryBuilder('paginatedPosts')
+    const { skip, take } = getFormattedPagination(paginationDto);
+    const queryBuilder = this.postRepository.createQueryBuilder('posts');
     const posts = await queryBuilder
-                .innerJoin('users', 'u')
+      .orderBy('posts.id', 'DESC')
+      .addOrderBy('posts.created_at', 'DESC')
+      .leftJoin('posts.user', 'user')
+      .loadRelationCountAndMap('posts.answers', 'posts.postsAnswers')
+      .addSelect(['user.username', 'user.fullName'])
+      .offset(skip)
+      .limit(take)
+      .getMany(); /*getSql() te trae la consulta armada */
 
     return {
-      posts
+      posts,
     };
   }
 
