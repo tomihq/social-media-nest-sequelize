@@ -8,6 +8,7 @@ import { RevalidateTagModule } from './revalidateTag/revalidate-tag.module';
 import { RevalidatePathModule } from './revalidatePath/revalidate-path.module';
 import { MailModule } from './mail/mail.module';
 import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
     RevalidateTagModule,
     RevalidatePathModule,
     MailModule,
+    FilesModule,
   ],
 })
 export class AppModule {}
