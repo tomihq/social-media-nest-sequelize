@@ -59,7 +59,7 @@ export class User {
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
 
-  @ManyToMany(() => Hobby, { cascade: true })
+  @ManyToMany(() => Hobby, { eager: true, cascade: true })
   @JoinTable({ name: 'user_hobbies' }) //siempre debe de estar si se usa many to many
   hobbies: Hobby[];
 
