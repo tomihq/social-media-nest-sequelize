@@ -23,7 +23,7 @@ export class HobbiesService {
     user.hobbies.push(createdHobby);
     this.userRepository.save(user);
     //
-    return 'This action adds a new hobby';
+    return createdHobby
   }
 
   findAll() {

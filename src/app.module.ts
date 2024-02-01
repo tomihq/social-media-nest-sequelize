@@ -10,6 +10,7 @@ import { MailModule } from './mail/mail.module';
 import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
 import { FilesModule } from './files/files.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { HobbiesModule } from './hobbies/hobbies.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     MailModule,
     FilesModule,
     CloudinaryModule,
+    HobbiesModule
   ],
 })
 export class AppModule {}

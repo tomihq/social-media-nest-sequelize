@@ -1,6 +1,6 @@
 import { Post } from 'src/posts/entities/post.entity';
 import { PostRetweet } from 'src/posts/entities/retweet.entity';
-import { Hobby } from 'src/users/hobbies/entities/hobby.entity';
+import { Hobby } from 'src/hobbies/entities/hobby.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
