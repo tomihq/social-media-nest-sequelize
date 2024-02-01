@@ -1,10 +1,13 @@
 import { Post } from 'src/posts/entities/post.entity';
 import { PostRetweet } from 'src/posts/entities/retweet.entity';
+import { Hobby } from 'src/users/hobbies/entities/hobby.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -23,7 +26,7 @@ export class User {
   username: string;
 
   @Column('text', {
-    default: ""
+    default: '',
   })
   description: string;
 
@@ -55,6 +58,10 @@ export class User {
 
   @OneToMany(() => Post, (post) => post.user)
   posts: Post[];
+
+  @ManyToMany(() => Hobby, { cascade: true })
+  @JoinTable({ name: 'user_hobbies' }) //siempre debe de estar si se usa many to many
+  hobbies: Hobby[];
 
   @OneToMany(() => PostRetweet, (postRetweet) => postRetweet.userId)
   retweets: PostRetweet[];
