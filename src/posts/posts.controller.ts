@@ -16,13 +16,14 @@ import { Auth } from 'src/auth/decorators';
 import { GetUser } from 'src/auth/decorators/get-user.decorator';
 import { User } from 'src/auth/entities/user.entity';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ValidRoles } from 'src/auth/interfaces';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  @Auth()
+  @Auth(ValidRoles.admin)
   create(@GetUser() user: User, @Body() createPostDto: CreatePostDto) {
     return this.postsService.create(user, createPostDto);
   }

@@ -23,7 +23,10 @@ export class UsersService {
 
   async getAll(paginationDto: PaginationDto) {
     const { skip, take } = getFormattedPagination(paginationDto);
-    const users = await this.userRepository.find({ skip, take });
+    const users = await this.userRepository.find({ skip, take, relations: {
+      posts: true
+    } });
+    console.log(users)
     return users;
   }
 

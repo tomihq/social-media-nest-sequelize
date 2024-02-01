@@ -11,6 +11,7 @@ import { AnswersModule } from './posts/postsAnswers/posts-answers.module';
 import { FilesModule } from './files/files.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { HobbiesModule } from './hobbies/hobbies.module';
+import { Auth2Module } from './auth2/auth2.module';
 
 @Module({
   imports: [
@@ -34,7 +35,8 @@ import { HobbiesModule } from './hobbies/hobbies.module';
     MailModule,
     FilesModule,
     CloudinaryModule,
-    HobbiesModule
+    HobbiesModule,
+    Auth2Module
   ],
 })
 export class AppModule {}

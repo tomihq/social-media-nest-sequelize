@@ -52,6 +52,7 @@ export class PostsService {
       .limit(take)
       .getMany(); /*getSql() te trae la consulta armada */
 
+      
     return {
       posts,
       hasNextPage: posts.length >= take,
