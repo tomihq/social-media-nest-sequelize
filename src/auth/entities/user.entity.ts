@@ -23,6 +23,11 @@ export class User {
   username: string;
 
   @Column('text', {
+    default: ""
+  })
+  description: string;
+
+  @Column('text', {
     unique: true,
   })
   email: string;
