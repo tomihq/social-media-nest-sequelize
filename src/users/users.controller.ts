@@ -22,9 +22,9 @@ export class UsersController {
     return this.usersService.getAll(paginationDto);
   }
 
-  @Get(':id')
-  getById(@Param('id', ParseUUIDPipe) id: string) {
-    return this.usersService.getById(id);
+  @Get(':term')
+  getById(@Param('term') term: string) {
+    return this.usersService.getByTerm(term);
   }
 
   @Delete(':id')

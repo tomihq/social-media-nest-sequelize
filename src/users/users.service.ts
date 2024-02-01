@@ -9,6 +9,8 @@ import { User } from 'src/auth/entities/user.entity';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { getFormattedPagination } from 'src/common/helpers/get-formatted-pagination.helpers';
 import { Repository } from 'typeorm';
+import { IsUUID } from 'class-validator';
+import { validate as isUUID } from 'uuid';
 
 @Injectable()
 export class UsersService {
@@ -25,8 +27,10 @@ export class UsersService {
     return users;
   }
 
-  async getById(id: string): Promise<Omit<User, 'roles' | 'password'>> {
-    const user = await this.userRepository.findOneBy({ id });
+  async getByTerm(term: string): Promise<Omit<User, 'roles' | 'password'>> {
+    let user = null;
+    user = isUUID(term)?await this.userRepository.findOne({where: {id: term}}):await this.userRepository.findOne({ where: {username: term} });
+  
     if (!user) throw new NotFoundException(`Invalid User`);
 
     delete user.roles;

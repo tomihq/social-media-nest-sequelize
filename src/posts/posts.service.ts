@@ -46,7 +46,7 @@ export class PostsService {
     const posts = await queryBuilder
       .addOrderBy('posts.created_at', 'DESC')
       .leftJoin('posts.user', 'user')
-      .loadRelationCountAndMap('posts.answers', 'posts.postsAnswers')
+      /* .loadRelationCountAndMap('posts.answers', 'posts.postsAnswers') */
       .addSelect(['user.username', 'user.fullName'])
       .offset(skip)
       .limit(take)
@@ -59,16 +59,11 @@ export class PostsService {
   }
 
   async findOne(id: string) {
-   /*  const post = await this.postRepository.findOne({
-      relations: {
-        postsAnswers: {
-          post: true,
-        },
-      },
+    const post = await this.postRepository.findOne({
       where: { id },
     });
     if (!post) throw new NotFoundException(`Invalid Post`);
-    return post; */
+    return post; 
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
