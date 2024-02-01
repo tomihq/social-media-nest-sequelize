@@ -59,7 +59,7 @@ export class PostsService {
   }
 
   async findOne(id: string) {
-    const post = await this.postRepository.findOne({
+   /*  const post = await this.postRepository.findOne({
       relations: {
         postsAnswers: {
           post: true,
@@ -68,7 +68,7 @@ export class PostsService {
       where: { id },
     });
     if (!post) throw new NotFoundException(`Invalid Post`);
-    return post;
+    return post; */
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
