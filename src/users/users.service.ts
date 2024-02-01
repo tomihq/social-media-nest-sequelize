@@ -28,9 +28,10 @@ export class UsersService {
   }
 
   async getByTerm(term: string): Promise<Omit<User, 'roles' | 'password'>> {
-    let user = null;
-    user = isUUID(term)?await this.userRepository.findOne({where: {id: term}}):await this.userRepository.findOne({ where: {username: term} });
-  
+    const user = isUUID(term)
+      ? await this.userRepository.findOne({ where: { id: term } })
+      : await this.userRepository.findOne({ where: { username: term } });
+
     if (!user) throw new NotFoundException(`Invalid User`);
 
     delete user.roles;

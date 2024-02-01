@@ -14,7 +14,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 @Module({
   imports: [
     AuthModule,
-    ConfigModule.forRoot({isGlobal: true}),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,

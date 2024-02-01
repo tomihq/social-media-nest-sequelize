@@ -63,7 +63,7 @@ export class PostsService {
       where: { id },
     });
     if (!post) throw new NotFoundException(`Invalid Post`);
-    return post; 
+    return post;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {

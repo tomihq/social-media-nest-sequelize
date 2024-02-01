@@ -9,9 +9,7 @@ import { CreatePostDto } from '../dto/create-post.dto';
 
 @Injectable()
 export class PostsAnswersService {
-  constructor(
-    private readonly postService: PostsService,
-  ) {}
+  constructor(private readonly postService: PostsService) {}
 
   async create(user: User, postId: string, createPostDto: CreatePostDto) {
     try {
@@ -24,10 +22,10 @@ export class PostsAnswersService {
           ...createdPost.post,
         },
       };
-     /*  const postAnswer = this.postAnswersRepository.create(postAnswerData);
+      /*  const postAnswer = this.postAnswersRepository.create(postAnswerData);
       const createdPostAnswer =
         await this.postAnswersRepository.save(postAnswer); */
-     /*  return {
+      /*  return {
         post: createdPostAnswer.post,
       }; */
     } catch (error) {

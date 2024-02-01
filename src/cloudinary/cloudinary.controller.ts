@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CloudinaryService } from './cloudinary.service';
 import { CreateCloudinaryDto } from './dto/create-cloudinary.dto';
 import { UpdateCloudinaryDto } from './dto/update-cloudinary.dto';
@@ -23,7 +31,10 @@ export class CloudinaryController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCloudinaryDto: UpdateCloudinaryDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCloudinaryDto: UpdateCloudinaryDto,
+  ) {
     return this.cloudinaryService.update(+id, updateCloudinaryDto);
   }
 
