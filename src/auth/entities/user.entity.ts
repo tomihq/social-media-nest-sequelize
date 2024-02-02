@@ -2,7 +2,7 @@ import { Post } from 'src/posts/entities/post.entity';
 import { Table, Column, Model,  Index, Default, Validate, DataType, CreatedAt, UpdatedAt, HasMany } from 'sequelize-typescript';
 
 @Table({
-  tableName: "User"
+  tableName: "user"
 })
 export class User extends Model {
   @Column({primaryKey: true})

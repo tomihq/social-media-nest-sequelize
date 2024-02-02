@@ -55,22 +55,24 @@ export class AuthService {
   }
 
   async loginUser(loginUserDto: LoginUserDto) {
-    // const { email, password } = loginUserDto;
-    // const user = await this.userRepository.findOne({
-    //   where: { email },
-    //   select: { id: true, email: true, password: true },
-    // });
+    const { email, password } = loginUserDto;
+    const user = await this.userModel.findOne({
+      where: { email },
+      attributes: ["id", "email", "password"],
+      raw: true 
+    });
 
-    // if (!user) throw new NotFoundException(`Invalid User`);
-    // const { password: dbPassword } = user;
-    // if (!bcrypt.compareSync(password, dbPassword))
-    //   throw new UnauthorizedException();
-    // delete user.password;
 
-    // return {
-    //   ...user,
-    //   token: this.getJwtToken({ id: user.id }),
-    // };
+    if (!user) throw new NotFoundException(`Invalid User`);
+    const { password: dbPassword } = user;
+    if (!bcrypt.compareSync(password, dbPassword))
+      throw new UnauthorizedException();
+    delete user.password;
+
+    return {
+      ...user,
+      token: this.getJwtToken({ id: user.id }),
+    };
   }
 
   private getJwtToken(payload: JwtPayload): string {
