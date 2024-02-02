@@ -1,64 +1,55 @@
 import { Post } from 'src/posts/entities/post.entity';
 import { PostRetweet } from 'src/posts/entities/retweet.entity';
 import { Hobby } from 'src/hobbies/entities/hobby.entity';
-import {
-  BeforeInsert,
-  BeforeUpdate,
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Table, Column, Model, PrimaryKey, Unique, Index, Default, Validate, DataType, CreatedAt, UpdatedAt, HasMany } from 'sequelize-typescript';
 
-@Entity('user')
-export class User {
-  @PrimaryGeneratedColumn('uuid')
+@Table({
+  tableName: "User"
+})
+export class User extends Model {
+  @Column({primaryKey: true})
   id: string;
 
-  @Column('text')
+  @Column(DataType.TEXT)
   fullName: string;
 
-  @Column('text', {
-    unique: true,
-  })
+  @Column(DataType.TEXT)
+  @Index({ unique: true })
   username: string;
 
-  @Column('text', {
-    default: '',
-  })
+  @Column(DataType.TEXT)
+  @Default("")
   description: string;
 
-  @Column('text', {
-    unique: true,
-  })
+  @Column(DataType.TEXT)
+  @Validate({isEmail: true})
+  @Index({unique: true})
   email: string;
 
-  @Column('text', {
-    select: false,
-  })
-  password: string;
+  @Column(DataType.TEXT)
+  password: string; //TODO: Remove it from default queries
 
-  @Column('bool', {
-    default: true,
-  })
+  @Column(DataType.BOOLEAN)
+  @Default(false)
   isActive: boolean;
 
-  @Column('text', {
-    default: '',
-  })
+  @Column(DataType.TEXT)
+  @Default("")
   avatarUrl: string;
 
-  @Column('text', {
-    array: true,
-    default: ['user'],
-  })
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
+  @Default(["user"])
   roles: string[];
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  @CreatedAt
+  createdAt: Date;
 
+  @UpdatedAt
+  updatedAt: Date
+
+  @HasMany(() => Post, {foreignKey: 'userId'})
+  posts: Post[];
+/* 
   @ManyToMany(() => Hobby, { eager: true, cascade: true })
   @JoinTable({ name: 'user_hobbies' }) //siempre debe de estar si se usa many to many
   hobbies: Hobby[];
@@ -80,5 +71,5 @@ export class User {
   @BeforeUpdate()
   checkFieldsBeforeUpdate() {
     this.checkFieldsBeforeInsert();
-  }
+  } */
 }

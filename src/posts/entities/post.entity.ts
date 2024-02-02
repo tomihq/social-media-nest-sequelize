@@ -1,66 +1,35 @@
 import { User } from 'src/auth/entities/user.entity';
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
-import { PostRetweet } from './retweet.entity';
 
-@Entity('posts')
-export class Post {
-  @PrimaryGeneratedColumn('uuid')
+import { BelongsTo, Column, CreatedAt, DataType, Default, PrimaryKey, Table, UpdatedAt, Model } from 'sequelize-typescript';
+
+@Table({
+  tableName: 'posts'
+})
+export class Post extends Model{
+  @Column(DataType.UUID)
+  @PrimaryKey
   id: string;
 
-  @Column('text')
+  @Column(DataType.TEXT)
   body: string;
 
-  @ManyToOne(() => User, (user) => user.posts, {
-    eager: true,
-  })
+  @BelongsTo(() => User, {foreignKey: 'posts'})
   user: User;
 
-  @Column('text', {
-    array: true,
-    default: [],
-  })
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
   attachments: string[];
 
-  @Column('int', {
-    default: 0,
-  })
+  @Column(DataType.INTEGER)
+  @Default(0)
   likes: number;
 
-  @OneToMany(() => PostRetweet, (retween) => retween.postId, {
-    eager: true,
-  })
-  retweets: PostRetweet[];
-
-  @OneToMany(() => Post, (post) => post.id)
-  parent_post: Post;
-
-  @Column('int', {
-    default: 0,
-  })
+  @Column(DataType.INTEGER)
+  @Default(0)
   saves: number;
 
-  @Column('text', {
-    array: true,
-    default: [],
-  })
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  public created_at: Date;
+  @CreatedAt
+  created_at: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  public updated_at: Date;
+  @UpdatedAt
+  updated_at: Date;
 }

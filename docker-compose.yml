@@ -7,26 +7,12 @@ services:
     environment:
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: socialMediaNest
-    container_name: SocialMedia
+    container_name: SocialMediaSequelize
     env_file:
       - .env
     ports:
       - "4302:5432"
     volumes:
        - ./postgres:/var/lib/postgresql/data
-    
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    container_name: nest-docker-postgres
-    env_file:
-      - .env
-    ports:
-      - '3001:3000'
-    depends_on:
-      - teslo-shop
-    volumes:
-      - ./src:/app/src
     
     
