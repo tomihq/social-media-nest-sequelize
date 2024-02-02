@@ -6,8 +6,9 @@ import { BelongsTo, Column, CreatedAt, DataType, Default, PrimaryKey, Table, Upd
   tableName: 'posts'
 })
 export class Post extends Model{
-  @Column(DataType.UUID)
+  
   @PrimaryKey
+  @Column(DataType.UUID)
   id: string;
 
   @Column(DataType.TEXT)
@@ -19,12 +20,12 @@ export class Post extends Model{
   @Column({ type: DataType.ARRAY(DataType.STRING) })
   attachments: string[];
 
-  @Column(DataType.INTEGER)
   @Default(0)
+  @Column(DataType.INTEGER)
   likes: number;
 
-  @Column(DataType.INTEGER)
   @Default(0)
+  @Column(DataType.INTEGER)
   saves: number;
 
   @CreatedAt

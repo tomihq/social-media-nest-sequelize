@@ -1,10 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, AutoIncrement, DataType, Table, Model } from 'sequelize-typescript';
 
-@Entity('isr')
-export class Isr {
-  @PrimaryGeneratedColumn('increment')
+@Table({
+  tableName: 'isr'
+})
+export class Isr extends Model {
+  @AutoIncrement
+  @Column(DataType.INTEGER)
   id: number;
 
-  @Column('text')
+  @Column(DataType.STRING)
   name: string;
 }

@@ -1,29 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateHobbyDto } from './dto/create-hobby.dto';
 import { UpdateHobbyDto } from './dto/update-hobby.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Hobby } from './entities/hobby.entity';
-import { Repository } from 'typeorm';
 import { User } from 'src/auth/entities/user.entity';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class HobbiesService {
   constructor(
-    @InjectRepository(Hobby)
-    private readonly hobbiesRepository: Repository<Hobby>,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectModel(Hobby)
+    private hobbiesModel: typeof Hobby,
+    @InjectModel(User)
+    private  userModel: typeof User,
   ) {}
 
   async create(user: User, createHobbyDto: CreateHobbyDto) {
-    const hobby = this.hobbiesRepository.create(createHobbyDto);
-    const createdHobby = await this.hobbiesRepository.save(hobby);
-    // ¡Esto deberia estar en un servicio de user-hobbies!
-    user.hobbies = user.hobbies || [];
-    user.hobbies.push(createdHobby);
-    this.userRepository.save(user);
-    //
-    return createdHobby
+    // const hobby = this.hobbiesRepository.create(createHobbyDto);
+    // const createdHobby = await this.hobbiesRepository.save(hobby);
+    // // ¡Esto deberia estar en un servicio de user-hobbies!
+    // user.hobbies = user.hobbies || [];
+    // user.hobbies.push(createdHobby);
+    // this.userRepository.save(user);
+    // //
+    // return createdHobby
   }
 
   findAll() {

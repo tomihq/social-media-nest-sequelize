@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { MailModule } from 'src/mail/mail.module';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService, ConfigService, JwtStrategy],
   imports: [
-    TypeOrmModule.forFeature([User]),
+    SequelizeModule.forFeature([User]),
     PassportModule.register({
       defaultStrategy: 'jwt',
     }),
@@ -31,6 +31,6 @@ import { MailModule } from 'src/mail/mail.module';
     }),
     MailModule,
   ],
-  exports: [TypeOrmModule, JwtStrategy, PassportModule, JwtModule],
+  exports: [SequelizeModule, JwtStrategy, PassportModule, JwtModule],
 })
 export class AuthModule {}

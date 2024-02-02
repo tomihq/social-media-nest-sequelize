@@ -3,33 +3,32 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Isr } from './entities/isr.entity';
-import { Repository } from 'typeorm';
 import { CreateRevalidateTagDto } from './dto/create-revalidate-tag.dto';
+import { InjectModel } from '@nestjs/sequelize';
 
 @Injectable()
 export class RevalidateTagService {
   logger = new Logger('revalidateTag');
 
   constructor(
-    @InjectRepository(Isr)
-    private readonly isrRepository: Repository<Isr>,
+    @InjectModel(Isr)
+    private isrModel: typeof Isr,
   ) {}
 
   async create(createRevalidateTagDto: CreateRevalidateTagDto) {
-    try {
+   /*  try {
       const isrUser = this.isrRepository.create(createRevalidateTagDto);
       await this.isrRepository.save(isrUser);
       await this.revalidate();
       return isrUser;
     } catch (error) {
       this.handleExceptions(error);
-    }
+    } */
   }
 
-  async findLast(): Promise<{ ok: boolean; user: Isr | null }> {
-    const [user = null] = await this.isrRepository.find({
+  async findLast()/* : Promise<{ ok: boolean; user: Isr | null }> */ {
+   /*  const [user = null] = await this.isrRepository.find({
       order: {
         id: -1,
       },
@@ -51,7 +50,7 @@ export class RevalidateTagService {
       },
     );
     const response = await request.json();
-    return response;
+    return response; */
   }
 
   private handleExceptions(error: any) {

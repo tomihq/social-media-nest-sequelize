@@ -1,7 +1,5 @@
 import { Post } from 'src/posts/entities/post.entity';
-import { PostRetweet } from 'src/posts/entities/retweet.entity';
-import { Hobby } from 'src/hobbies/entities/hobby.entity';
-import { Table, Column, Model, PrimaryKey, Unique, Index, Default, Validate, DataType, CreatedAt, UpdatedAt, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model,  Index, Default, Validate, DataType, CreatedAt, UpdatedAt, HasMany } from 'sequelize-typescript';
 
 @Table({
   tableName: "User"
@@ -13,32 +11,32 @@ export class User extends Model {
   @Column(DataType.TEXT)
   fullName: string;
 
-  @Column(DataType.TEXT)
   @Index({ unique: true })
+  @Column(DataType.TEXT)
   username: string;
 
-  @Column(DataType.TEXT)
   @Default("")
+  @Column(DataType.TEXT)
   description: string;
 
-  @Column(DataType.TEXT)
   @Validate({isEmail: true})
   @Index({unique: true})
+  @Column(DataType.TEXT)
   email: string;
 
   @Column(DataType.TEXT)
   password: string; //TODO: Remove it from default queries
 
-  @Column(DataType.BOOLEAN)
   @Default(false)
+  @Column(DataType.BOOLEAN)
   isActive: boolean;
 
-  @Column(DataType.TEXT)
   @Default("")
+  @Column(DataType.TEXT)
   avatarUrl: string;
 
-  @Column({ type: DataType.ARRAY(DataType.STRING) })
   @Default(["user"])
+  @Column({ type: DataType.ARRAY(DataType.STRING) })
   roles: string[];
 
   @CreatedAt

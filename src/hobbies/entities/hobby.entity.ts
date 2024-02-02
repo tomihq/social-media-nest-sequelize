@@ -1,29 +1,19 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, CreatedAt, DataType, Model, PrimaryKey, Table, UpdatedAt } from 'sequelize-typescript';
 
-@Entity('hobby')
-export class Hobby {
-  @PrimaryGeneratedColumn('uuid')
+@Table({
+  tableName: "hobby"
+})
+export class Hobby extends Model {
+  @PrimaryKey
+  @Column(DataType.UUID)
   id: string;
 
-  @Column('text')
+  @Column(DataType.STRING)
   name: string;
 
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
+  @CreatedAt
   public created_at: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
+  @UpdatedAt
   public updated_at: Date;
 }

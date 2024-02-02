@@ -13,6 +13,7 @@ import { HobbiesModule } from './hobbies/hobbies.module';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './auth/entities/user.entity';
 import { Post } from './posts/entities/post.entity';
+import { Hobby } from './hobbies/entities/hobby.entity';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { Post } from './posts/entities/post.entity';
       database: process.env.DB_NAME,
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
-      models: [User, Post]
+      models: [User, Post, Hobby]
     }),
     UsersModule,
     PostsModule,
