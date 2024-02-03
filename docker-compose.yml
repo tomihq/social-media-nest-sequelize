@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  teslo-shop:
+    image: postgres:14.3
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: socialMediaNest
+    container_name: SocialMediaSequelize
+    env_file:
+      - .env
+    ports:
+      - "4302:5432"
+    volumes:
+       - ./postgres:/var/lib/postgresql/data
+    
+    
